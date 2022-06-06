@@ -1,10 +1,18 @@
-import logo from "./logo.svg";
 import "./App.css";
+import HeroHeader from "./components/Hero/HeroHeader";
+import HeroMain from "./components/Hero/HeroMain";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
-    <div className="bg-black text-white text-3xl text-center">
-      <p>Welcome!</p>
+    <div className="bg-white">
+      <div>
+        <Navbar></Navbar>
+      </div>
+      <div>
+        <HeroHeader></HeroHeader>
+        <HeroMain></HeroMain>
+      </div>
     </div>
   );
 }
