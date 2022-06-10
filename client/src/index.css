@@ -6,6 +6,5 @@
 @layer base {
     html {
       font-family: "baloo 2" , system-ui, sans-serif;
-      scroll-behavior: smooth;
     }
   }

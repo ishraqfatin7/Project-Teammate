@@ -18,7 +18,7 @@ const HeroHeader = () => {
         </a>
         <a
           className="bg-white text-lg text-amber-500 font-semibold underline"
-          href="/#"
+          href="/#how"
         >
           Learn How
         </a>
