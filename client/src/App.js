@@ -9,19 +9,19 @@ import Signin from "./components/User/Signin";
 import Home from "./Home";
 
 import {
-  BrowserRouter as Router,
-  Navigate,
   Route,
   Routes,
 } from "react-router-dom";
 
+
 function App() {
   return (
     <div>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Navigate to="/Home" />} />
-        <Route path="/signin" element={<Signin />} />
+        console.log(navs);
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="signin" element={<Signin />} />
       </Routes>
     </div>
   );

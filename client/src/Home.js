@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Sidenav from "./components/Navbar/Sidenav";
 import Footer from "./components/Footer";
 
-
 let navs = [
     {
       item: "Sign In",

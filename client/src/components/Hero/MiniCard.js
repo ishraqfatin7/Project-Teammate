@@ -2,7 +2,7 @@ import React from "react";
 
 export default function MiniCard({image, title}) {
   return (
-    <div class="p-5 w-28 shadow-2xl">
+    <div className="p-5 w-28 shadow-2xl">
       <figure>
         <img
           className="w-24 xs:w-10"
