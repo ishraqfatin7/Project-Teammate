@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.png";
 
 const Navbar = ({ navs }) => {
-  // console.log(navs);
   return (
     <div className="bg-white min-w-full">
       <div className="navbar md:max-w-3xl m-auto">
