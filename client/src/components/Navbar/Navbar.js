@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.png";
 
 const Navbar = ({ navs }) => {
-  // console.log(navs);
+  console.log(navs);
   return (
     <div className="bg-white min-w-full">
       <div className="navbar md:max-w-3xl m-auto">
         <div className="navbar-start w-3/5">
           <div className="w-full float-left">
             <Link to="/">
-            <img
-              alt="logo"
-              src={logo}
-              className="btn btn-ghost normal-case text-xl"
-            /></Link>
+              <img
+                alt="logo"
+                src={logo}
+                className="btn btn-ghost normal-case text-xl"
+              />
+            </Link>
           </div>
         </div>
         <div className="navbar-end w-2/5 pr-2">

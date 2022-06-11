@@ -22,6 +22,15 @@ let text3 =
 let text4 =
   "Build your team and work from home or wherever you want and stay up-to-date";
 
+let cards = [
+  {
+    icon: mini1,
+    text: "Select Catagory",
+  },
+  { icon: mini2, text: "Search Profiles" },
+  { icon: mini3, text: "Find or Join" },
+  { icon: mini4, text: "Chat with them" },
+];
 const HeroMain = () => {
   return (
     <div>
@@ -34,14 +43,11 @@ const HeroMain = () => {
         <HeroCard grid={grid4} head={head4} text={text4} />
       </div>
       <div className="mt-5 mb-5" id="how">
-        <h1 className="text-center text-black text-2xl">
-          WONDERING HOW?
-        </h1>
-        <div className="flex justify-between lg:max-w-2xl m-auto">
-          <MiniCard image={mini1} title="Select Category"/>
-          <MiniCard image={mini2} title="Search Profiles"/>
-          <MiniCard image={mini3} title="Find or Join"/>
-          <MiniCard image={mini4} title="Chat with them"/>
+        <h1 className="text-center text-black text-2xl">WONDERING HOW?</h1>
+        <div className="flex justify-center lg:h-45 lg:max-w-2xl m-auto ">
+          {cards.map((card, index) => (
+            <MiniCard image={card.icon} title={card.text} />
+          ))}
         </div>
       </div>
     </div>
