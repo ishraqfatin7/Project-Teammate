@@ -90,6 +90,10 @@ export default function Signup() {
                     Sign Up
                   </button>
                 </div>
+                
+                <label className="label">
+                   <p className="text-slate-400 font-semibold text-sm"> By Signing up, you agree to TeamMates's Terms of conditions and Privacy Policy</p>
+                </label>
               </div>
             </div>
           </div>
