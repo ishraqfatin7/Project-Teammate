@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
-import Sidenav from "../Navbar/Sidenav";
+import Shell from "../Shell";
 let navs = [
     { item: "Home" },
     { item: "Sign In" },
@@ -11,14 +10,7 @@ let navs = [
 
 export default function Signup() {
   return (
-
-    // for navbar i have to put it in every single page
-    <div className="drawer dark:bg-slate-100 min-w-full">
-      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content bg-white">
-        <Navbar navs={navs} />
-
-
+    <Shell navs={navs}>
         {/* background page */}
         <div className="hero min-h-screen ">
 
@@ -31,7 +23,7 @@ export default function Signup() {
               <Link className="underline underline-offset-2 text-black" to="/signin">Already have an account?</Link>
             </div>
 
-            {/* input card */}
+            {/* input Form card */}
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-slate-200">
               <div className="card-body">
 
@@ -86,20 +78,16 @@ export default function Signup() {
 
                 {/* Sign up submit button */}
                 <div className="form-control mt-6">
-                  <button className="btn bg-orange-500 text-black">
-                    Sign Up
-                  </button>
+                  <input type="submit" className="btn bg-orange-500 text-black"/>
                 </div>
                 
                 <label className="label">
-                   <p className="text-slate-400 font-semibold text-sm"> By Signing up, you agree to TeamMates's Terms of conditions and Privacy Policy</p>
+                   <p className="text-slate-400 font-semibold text-sm"> By Signing up, you agree to TeamMates' Terms of conditions and Privacy Policy</p>
                 </label>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <Sidenav navs={navs} />
-    </div>
+    </Shell>
   );
 }

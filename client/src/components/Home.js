@@ -1,10 +1,10 @@
 import React from "react";
-import "./App.css";
-import HeroHeader from "./components/Hero/HeroHeader";
-import HeroMain from "./components/Hero/HeroMain";
-import Navbar from "./components/Navbar/Navbar";
-import Sidenav from "./components/Navbar/Sidenav";
-import Footer from "./components/Footer";
+import "../App.css";
+import HeroHeader from "./Hero/HeroHeader";
+import HeroMain from "./Hero/HeroMain";
+import Navbar from "./Navbar/Navbar";
+import Sidenav from "./Navbar/Sidenav";
+import Footer from "./Footer";
 
 let navs = [
     {
