@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../App";
-//import SignInWithGoogle from "../Authentication/Login/GoogleLogin";
+import React, { useContext, useState } from "react";
+import { useAuth } from "../../context/authContext";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import initializeAuthentication from "../Authentication/Firebase/firebase.initialize";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Shell from "../Shell";
+import { async } from "@firebase/util";
+import { useForm } from "react-hook-form";
 
 let navs = [
   { item: "Home" },
@@ -14,10 +15,22 @@ let navs = [
 ];
 
 export default function Signin() {
+  const navigate = useNavigate();
+  const { signIn, user } = useAuth();
+
   //console.log(loggedInUser);
   //firebase Google Login
-  //const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  const handleGoogleSignIn = () => {
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    signIn(data.email, data.password);
+  };
+  const handleGoogleSignIn = async () => {
     initializeAuthentication();
 
     const provider = new GoogleAuthProvider();
@@ -77,39 +90,53 @@ export default function Signin() {
             </Link>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-slate-200">
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-black">Email</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="email"
-                  className="input input-bordered"
-                />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="card-body">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-black">Email</span>
+                  </label>
+                  <input
+                    defaultValue="ishraqfatin7@gmail.com"
+                    {...register("email", { required: true })}
+                    type="text"
+                    placeholder="email"
+                    className="input input-bordered"
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-black">Password</span>
+                  </label>
+                  <input
+                    defaultValue="Password"
+                    {...register("password", { required: true })}
+                    type="text"
+                    placeholder="password"
+                    className="input input-bordered"
+                  />
+                  <label className="label">
+                    <a
+                      href="/#"
+                      className="label-text-alt link link-hover text-black"
+                    >
+                      Forgot password?
+                    </a>
+                  </label>
+                </div>
+                <div className="form-control mt-6">
+                  <button className="btn bg-orange-500 text-black">
+                    Login
+                  </button>
+                  <p className="py-3 hover: text-orange-500">
+                    Prefer Passwordless ?
+                  </p>
+                  <button className="btn btn-info" onClick={handleGoogleSignIn}>
+                    Sign In With Google
+                  </button>
+                </div>
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-black">Password</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="password"
-                  className="input input-bordered"
-                />
-                <label className="label">
-                  <a
-                    href="/#"
-                    className="label-text-alt link link-hover text-black"
-                  >
-                    Forgot password?
-                  </a>
-                </label>
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn bg-orange-500 text-black">Login</button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
