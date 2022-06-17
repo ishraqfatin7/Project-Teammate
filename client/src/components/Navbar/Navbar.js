@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.png";
 
-const Navbar = ({ navs }) => {
-  console.log(navs);
+export default function Navbar({ navs }) {
   return (
     <div className="bg-white min-w-full">
       <div className="navbar md:max-w-3xl m-auto">
@@ -55,6 +54,4 @@ const Navbar = ({ navs }) => {
       </div>
     </div>
   );
-};
-
-export default Navbar;
+}
