@@ -116,6 +116,19 @@ export default function EditProfile() {
                   </select>
                 </div>
 
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-black">Team Category</span>
+                  </label>
+                  <select
+                    {...register("categiry")}
+                    className="select select-bordered w-full max-w-xs"
+                  >
+                    <option value="Gamer">Gamer</option>
+                    <option value="Traveler">Traveler</option>
+                  </select>
+                </div>
+
                 {/* retype password */}
                 <div className="form-control">
                   <label className="label">

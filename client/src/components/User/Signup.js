@@ -22,7 +22,7 @@ export default function Signup() {
         .then((userCredential) => {
           // Signed in
           // const user = userCredential.user; user already defined
-          //  navigate("/");
+           navigate(-1);
           // ...
         })
         .catch((error) => {

@@ -25,7 +25,7 @@ export default function Signin() {
   const onSubmit = (data) => {
     signIn(data.email, data.password)
       .then(() => {
-        navigate("/dashboard", { replace: true });
+        navigate(-1);
       })
       .catch((error) => {
         console.log(error);
