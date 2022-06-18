@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { useForm } from "react-hook-form";
 import Shell from "../Shell";
-
+import axios from "axios";
 export default function EditProfile() {
-  const { user } = useAuth();
+  const { user, updateUserProfile } = useAuth();
   const navs = [
     { item: `${user ? "Home" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
@@ -17,7 +17,50 @@ export default function EditProfile() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [response, setResponse] = useState({});
+  const handleImageUpload = (event) => {
+    console.log(event.target.files[0]);
+    const imageData = new FormData();
+    imageData.set("key", "3553a276448dc98ad5f48955488e4ee7");
+    imageData.append("image", event.target.files[0]);
+
+    axios
+      .post("https://api.imgbb.com/1/upload", imageData)
+      .then(function (response) {
+        setImageUrl(response.data.data.display_url);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const onSubmit = (data) => {
+    const userData = {
+      firstName: data.FirstName,
+      lastName: data.LastName,
+      address: data.Address,
+      email: data.Email,
+      Mobile: data.MobileNumber,
+      image: imageUrl,
+      profession: data.Profession,
+      category: data.category,
+    };
+    console.log(userData);
+    updateUserProfile(userData.firstName, userData.image);
+    const url = `http://localhost:5000/addUser`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        setResponse(response);
+        console.log("From Server: ", response);
+      })
+      .catch((error) => console.log(error));
+  };
   //   console.log(errors);
   return (
     <Shell navs={navs}>
@@ -39,8 +82,9 @@ export default function EditProfile() {
                   </label>
                   <input
                     type="file"
-                    name="Picture"
-                    {...register("Picture", {})}
+                    onChange={handleImageUpload}
+                    name=""
+                    id=""
                   />
                 </div>
                 {/* name input */}
