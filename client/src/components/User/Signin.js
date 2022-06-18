@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import initializeAuthentication from "../Authentication/Firebase/firebase.initialize";
@@ -6,13 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Shell from "../Shell";
 import { async } from "@firebase/util";
 import { useForm } from "react-hook-form";
-
-let navs = [
-  { item: "Home" },
-  { item: "Sign Up" },
-  { item: "Create a team" },
-  { item: "About Us" },
-];
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -27,8 +21,15 @@ export default function Signin() {
     watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
-    signIn(data.email, data.password);
+    signIn(data.email, data.password)
+      .then(() => {
+        navigate("/dashboard", { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const handleGoogleSignIn = async () => {
     initializeAuthentication();
@@ -52,6 +53,7 @@ export default function Signin() {
         };
         console.log(signedInUser);
         setUserToken();
+        navigate("/dashboard", { replace: true });
         //  setLoggedInUser(signedInUser);
       })
       .catch((error) => {
@@ -76,7 +78,21 @@ export default function Signin() {
         });
     };
   };
-  return (
+  let navs = [
+    { item: `${user? "Home" : "Sign In"}` },
+    { item: `${user ? "Profile" : "Sign Up"}` },
+    { item: "Create a team" },
+    { item: "About Us" },
+    { item: `${user ? "Log out" : ''}` },
+  ];
+  return user ? (
+    <Shell navs={navs}>
+      <h1 className="text-5xl font-bold text-orange-500 m-auto">
+        You are already logged in
+      </h1>
+      <p>go to your <Link to="../dashboard" className="underline underline-offset-2 text-black">dashboard</Link></p>
+    </Shell>
+  ) : (
     <Shell navs={navs}>
       <div className="hero min-h-screen">
         <div className="hero-content flex-col ">
@@ -93,26 +109,26 @@ export default function Signin() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="card-body">
                 <div className="form-control">
-                  <label className="label">
+                  {/* <label className="label">
                     <span className="label-text text-black">Email</span>
-                  </label>
+                  </label> */}
                   <input
-                    defaultValue="ishraqfatin7@gmail.com"
+                    defaultValue=""
                     {...register("email", { required: true })}
                     type="text"
-                    placeholder="email"
+                    placeholder="Enter your E-mail"
                     className="input input-bordered"
                   />
                 </div>
                 <div className="form-control">
-                  <label className="label">
+                  {/* <label className="label">
                     <span className="label-text text-black">Password</span>
-                  </label>
+                  </label> */}
                   <input
-                    defaultValue="Password"
+                    defaultValue=""
                     {...register("password", { required: true })}
                     type="text"
-                    placeholder="password"
+                    placeholder="Enter your password"
                     className="input input-bordered"
                   />
                   <label className="label">
@@ -124,11 +140,12 @@ export default function Signin() {
                     </a>
                   </label>
                 </div>
-                <div className="form-control mt-6">
+                <div className="form-control mt-3">
                   <button className="btn bg-orange-500 text-black">
                     Login
                   </button>
-                  <p className="py-3 hover: text-orange-500">
+                  <div className="divider text-black">OR</div>
+                  <p className="py-3 hover: text-black m-auto">
                     Prefer Passwordless ?
                   </p>
                   <button className="btn btn-info" onClick={handleGoogleSignIn}>

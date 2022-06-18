@@ -3,15 +3,9 @@ import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import Shell from "../Shell";
-let navs = [
-  { item: "Home" },
-  { item: "Sign In" },
-  { item: "Create a team" },
-  { item: "About Us" },
-];
 
 export default function Signup() {
-  const { signUp } = useAuth();
+  const { signUp, user } = useAuth();
 
   const [error, setError] = useState();
   const navigate = useNavigate();
@@ -27,7 +21,7 @@ export default function Signup() {
       signUp(data.email, data.password)
         .then((userCredential) => {
           // Signed in
-          const user = userCredential.user;
+          // const user = userCredential.user; user already defined
           //  navigate("/");
           // ...
         })
@@ -41,7 +35,21 @@ export default function Signup() {
       // show error div;
     }
   };
-  return (
+  let navs = [
+    { item: `${user ? "Home" : "Sign In"}` },
+    { item: `${user ? "Profile" : "Sign Up"}` },
+    { item: "Create a team" },
+    { item: "About Us" },
+    { item: `${user ? "Log out" : ""}` },
+  ];
+  return user ? (
+    <Shell navs={navs}>
+      <h1 className="text-5xl font-bold text-orange-500 m-auto">
+        You are already logged in
+      </h1>
+      <p>go to your <Link to="../dashboard" className="underline underline-offset-2 text-black">dashboard</Link></p>
+    </Shell>
+  ) : (
     <Shell navs={navs}>
       {/* background page */}
       <div className="hero min-h-screen ">

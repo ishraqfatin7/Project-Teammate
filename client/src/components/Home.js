@@ -5,17 +5,19 @@ import HeroMain from "./Hero/HeroMain";
 import Navbar from "./Navbar/Navbar";
 import Sidenav from "./Navbar/Sidenav";
 import Footer from "./Footer";
+import { useAuth } from "../context/authContext";
 
-let navs = [
-    {
-      item: "Sign In",
-    },
-    { item: "Sign Up" },
-    { item: "Create a team" },
-    { item: "About Us" },
-  ];
+
 
 export default function Home() {
+  const user = useAuth();
+  let navs = [
+    { item: `${user.user?"Dashboard":'Sign In'}`},
+    { item: `${user.user?"Profile":'Sign Up'}` },
+    { item: "Create a team" },
+    { item: "About Us" },
+    { item : `${user.user?"Log out":''}`}
+  ];
   return (
     <div className="drawer dark:bg-slate-900 min-w-full">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />

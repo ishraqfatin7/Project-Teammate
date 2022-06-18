@@ -45,6 +45,7 @@ export default function Navbar({ navs }) {
               <Link
                 className=" flex items-center justify-center p-2 rounded-md text-md font-semibold text-base-300 text-center mx-2 whitespace-nowrap"
                 to={`/${nav.item.split(" ").join("").toLowerCase()}`}
+                key={index}
               >
                 {nav.item}
               </Link>

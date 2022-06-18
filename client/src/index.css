@@ -8,3 +8,9 @@
       font-family: "baloo 2" , system-ui, sans-serif;
     }
   }
+.divider:before {
+    @apply bg-black
+}
+.divider:after {
+    @apply bg-black
+}

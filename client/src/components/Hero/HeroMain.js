@@ -46,7 +46,7 @@ const HeroMain = () => {
         <h1 className="text-center text-black text-2xl">WONDERING HOW?</h1>
         <div className="flex justify-center lg:h-45 lg:max-w-2xl m-auto ">
           {cards.map((card, index) => (
-            <MiniCard image={card.icon} title={card.text} />
+            <MiniCard image={card.icon} title={card.text} key={index}/>
           ))}
         </div>
       </div>

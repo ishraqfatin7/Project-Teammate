@@ -9,6 +9,7 @@ export default function Sidenav({navs}){
             <Link
               className=" flex items-center justify-start p-2 rounded-md text-lg font-semibold text-white mx-2 tracking-wider"
               to={`/${nav.item.split(" ").join("").toLowerCase()}`}
+              key={index}
             >
               {nav.item}
             </Link>

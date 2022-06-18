@@ -7,9 +7,11 @@ import About from "./components/About";
 import Profile from "./components/User/Profile";
 import { AuthProvider } from "./context/authContext";
 import { PrivateRoute } from "./components/Authentication/PrivateRoute/PrivateRoute";
+import Logout from "./components/User/Logout";
+import Dashboard from "./components/User/Dashboard";
+import EditProfile from "./components/User/EditProfile";
 export const UserContext = createContext({});
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState([]);
   return (
     <AuthProvider>
       <Routes>
@@ -18,14 +20,12 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/aboutus" element={<About />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/*" element={<PrivateRoute/>}>
+          <Route path="dashboard" element={<Dashboard />}/>
+          <Route path="profile" element={<Profile />}/>
+          <Route path="editprofile" element={<EditProfile />}/>
+          <Route path="logout" element={<Logout />}/>
+        </Route>
       </Routes>
     </AuthProvider>
   );
