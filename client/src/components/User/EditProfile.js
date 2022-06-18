@@ -41,6 +41,7 @@ export default function EditProfile() {
                     type="file"
                     name="Picture"
                     {...register("Picture", {})}
+                    className="select select-bordered w-full max-w-xs"
                   />
                 </div>
                 {/* name input */}
@@ -121,7 +122,7 @@ export default function EditProfile() {
                     <span className="label-text text-black">Team Category</span>
                   </label>
                   <select
-                    {...register("categiry")}
+                    {...register("category")}
                     className="select select-bordered w-full max-w-xs"
                   >
                     <option value="Gamer">Gamer</option>
@@ -177,7 +178,7 @@ export default function EditProfile() {
                   />
                   <div className="text-red-500">
                     {errors.MobileNumber &&
-                      "Should be number and more than 6, less than 12 digits"}
+                      `Should be number less than 12 digits`}
                   </div>
                 </div>
                 {/* Sign up submit button */}
