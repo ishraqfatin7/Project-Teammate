@@ -119,6 +119,9 @@ export default function Signin() {
                     placeholder="Enter your E-mail"
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.email && "Email is required"}
+                  </div>
                 </div>
                 <div className="form-control">
                   {/* <label className="label">
@@ -131,6 +134,9 @@ export default function Signin() {
                     placeholder="Enter your password"
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.password && "Password is required"}
+                  </div>
                   <label className="label">
                     <a
                       href="/#"

@@ -18,7 +18,7 @@ export default function EditProfile() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => console.log(data);
-//   console.log(errors);
+  //   console.log(errors);
   return (
     <Shell navs={navs}>
       <div className="hero min-h-screen ">
@@ -51,12 +51,15 @@ export default function EditProfile() {
                   <input
                     type="text"
                     placeholder="First name"
-                    {...register("First name", {
+                    {...register("FirstName", {
                       required: true,
                       maxLength: 80,
                     })}
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.FirstName && "Enter First name required"}
+                  </div>
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -65,12 +68,15 @@ export default function EditProfile() {
                   <input
                     type="text"
                     placeholder="Last name"
-                    {...register("Last name", {
+                    {...register("LastName", {
                       required: true,
                       maxLength: 100,
                     })}
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.LastName && "Enter Last name required"}
+                  </div>
                 </div>
 
                 {/* mail input */}
@@ -87,6 +93,9 @@ export default function EditProfile() {
                     })}
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.Email && "Email is invalid"}
+                  </div>
                 </div>
 
                 {/* password input */}
@@ -132,9 +141,12 @@ export default function EditProfile() {
                   <input
                     type="text"
                     placeholder="Address"
-                    {...register("Address", {})}
+                    {...register("Address", { required: true })}
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.Address && "Address is required"}
+                  </div>
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -143,13 +155,17 @@ export default function EditProfile() {
                   <input
                     type="tel"
                     placeholder="Mobile number"
-                    {...register("Mobile number", {
+                    {...register("MobileNumber", {
                       required: true,
                       minLength: 6,
                       maxLength: 12,
                     })}
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.MobileNumber &&
+                      "Should be number and more than 6, less than 12 digits"}
+                  </div>
                 </div>
                 {/* Sign up submit button */}
                 <div className="form-control mt-6">

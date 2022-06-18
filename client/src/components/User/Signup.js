@@ -47,7 +47,15 @@ export default function Signup() {
       <h1 className="text-5xl font-bold text-orange-500 m-auto">
         You are already logged in
       </h1>
-      <p>go to your <Link to="../dashboard" className="underline underline-offset-2 text-black">dashboard</Link></p>
+      <p>
+        go to your{" "}
+        <Link
+          to="../dashboard"
+          className="underline underline-offset-2 text-black"
+        >
+          dashboard
+        </Link>
+      </p>
     </Shell>
   ) : (
     <Shell navs={navs}>
@@ -76,12 +84,15 @@ export default function Signup() {
                     <span className="label-text text-black">Name</span>
                   </label>
                   <input
-                    defaultValue="Fatin"
+                    defaultValue=""
                     {...register("name", { required: true })}
                     type="text"
                     placeholder="Name"
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.name && "Name is required"}
+                  </div>
                 </div>
 
                 {/* mail input */}
@@ -90,12 +101,15 @@ export default function Signup() {
                     <span className="label-text text-black">Email</span>
                   </label>
                   <input
-                    defaultValue="ishraqfatin7@gmail.com"
+                    defaultValue=""
                     {...register("email", { required: true })}
                     type="text"
                     placeholder="email"
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.email && "Email is required"}
+                  </div>
                 </div>
 
                 {/* password input */}
@@ -104,12 +118,15 @@ export default function Signup() {
                     <span className="label-text text-black">Password</span>
                   </label>
                   <input
-                    defaultValue="Password"
+                    defaultValue=""
                     {...register("password", { required: true })}
                     type="password"
                     placeholder="password"
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.password && "Password is required"}
+                  </div>
                 </div>
 
                 {/* retype password */}
@@ -120,12 +137,15 @@ export default function Signup() {
                     </span>
                   </label>
                   <input
-                    defaultValue="Password"
+                    defaultValue=""
                     {...register("retypePass", { required: true })}
                     type="password"
                     placeholder="Retype password"
                     className="input input-bordered"
                   />
+                  <div className="text-red-500">
+                    {errors.retypePass && "Enter password again"}
+                  </div>
                 </div>
 
                 {/* Sign up submit button */}

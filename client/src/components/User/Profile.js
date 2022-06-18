@@ -7,7 +7,7 @@ export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const navs = [
-    { item: `${user ? "Home" : "Sign In"}` },
+    { item: `${user ? "Dashboard" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
