@@ -10,6 +10,7 @@ import { PrivateRoute } from "./components/Authentication/PrivateRoute/PrivateRo
 import Logout from "./components/User/Logout";
 import Dashboard from "./components/User/Dashboard";
 import EditProfile from "./components/User/EditProfile";
+import CreateTeam from "./components/actions/CreateTeam";
 export const UserContext = createContext({});
 function App() {
   return (
@@ -20,11 +21,12 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/aboutus" element={<About />} />
+        <Route path="logout" element={<Logout />}/>
         <Route path="/*" element={<PrivateRoute/>}>
           <Route path="dashboard" element={<Dashboard />}/>
           <Route path="profile" element={<Profile />}/>
           <Route path="editprofile" element={<EditProfile />}/>
-          <Route path="logout" element={<Logout />}/>
+          <Route path="createateam" element={<CreateTeam />}/>
         </Route>
       </Routes>
     </AuthProvider>

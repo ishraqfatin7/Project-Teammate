@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { useForm } from "react-hook-form";
 import Shell from "../Shell";
-
+import axios from "axios";
 export default function EditProfile() {
-  const { user } = useAuth();
+  const { user, updateUserProfile } = useAuth();
   const navs = [
-    { item: `${user ? "Home" : "Sign In"}` },
+    { item: `${user ? "Dashboard" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
@@ -17,17 +17,106 @@ export default function EditProfile() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [response, setResponse] = useState({});
+  const [updated, setUpdated] = useState(null);
+  const handleImageUpload = (event) => {
+    console.log(event.target.files[0]);
+    const imageData = new FormData();
+    imageData.set("key", "3553a276448dc98ad5f48955488e4ee7"); //auth key should be hashed in a separate file
+    imageData.append("image", event.target.files[0]);
+
+    axios
+      .post("https://api.imgbb.com/1/upload", imageData)
+      .then(function (response) {
+        setImageUrl(response.data.data.display_url);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const onSubmit = (data) => {
+    const userData = {
+      firstName: data.FirstName,
+      lastName: data.LastName,
+      address: data.Address,
+      email: data.Email,
+      Mobile: data.MobileNumber,
+      image: imageUrl,
+      profession: data.Profession,
+      category: data.category,
+    };
+    console.log(userData);
+    updateUserProfile(
+      userData.firstName,
+      userData.image,
+      () => setUpdated(true),
+      () => setUpdated(false)
+    );
+    const url = `http://localhost:5000/addUser`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        setResponse(response);
+        console.log("From Server: ", response);
+      })
+      .catch((error) => console.log(error));
+  };
   //   console.log(errors);
+  const updatedText = (
+    <div className="alert alert-success shadow-lg">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current flex-shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>Profile updated successfully</span>
+      </div>
+    </div>
+  );
+  const errorText = (
+    <div className="alert alert-error shadow-lg">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current flex-shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>Profile update failed.</span>
+      </div>
+    </div>
+  );
   return (
     <Shell navs={navs}>
       <div className="hero min-h-screen ">
         {/* input card container for flex*/}
-
         <div className="hero-content flex-col ">
           <div className="text-center ">
             {/* head title */}
             <h1 className="text-5xl font-bold text-orange-500">Edit Profile</h1>
+            {updated ? updatedText : updated === false ? errorText : null}
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* input Form card */}
@@ -42,6 +131,8 @@ export default function EditProfile() {
                     name="Picture"
                     {...register("Picture", {})}
                     className="select select-bordered w-full max-w-xs"
+                    onChange={handleImageUpload}
+                    id=""
                   />
                 </div>
                 {/* name input */}
