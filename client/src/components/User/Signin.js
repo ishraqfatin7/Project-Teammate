@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+// import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import initializeAuthentication from "../Authentication/Firebase/firebase.initialize";
 import { Link, useNavigate } from "react-router-dom";
 import Shell from "../Shell";
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 import { useForm } from "react-hook-form";
 
 export default function Signin() {
@@ -117,7 +117,7 @@ export default function Signin() {
                   </label>
                 </div>
                 <div className="form-control mt-3">
-                  <button className="btn bg-orange-500 text-black">
+                  <button className="btn bg-orange-500 hover:btn-primary text-black">
                     Login
                   </button>
                   <div className="divider text-black">OR</div>

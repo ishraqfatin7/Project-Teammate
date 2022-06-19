@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
 import Sidenav from "./Navbar/Sidenav";
 
@@ -9,6 +10,7 @@ export default function Shell({navs, children}) {
       <div className="drawer-content bg-white">
         <Navbar navs={navs} />
         {children}
+        {/* <Footer/> */}
       </div>
       <Sidenav navs={navs} />
     </div>

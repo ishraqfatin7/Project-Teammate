@@ -22,11 +22,11 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/aboutus" element={<About />} />
         <Route path="logout" element={<Logout />}/>
+        <Route path="createateam" element={<CreateTeam />}/>
         <Route path="/*" element={<PrivateRoute/>}>
           <Route path="dashboard" element={<Dashboard />}/>
           <Route path="profile" element={<Profile />}/>
           <Route path="editprofile" element={<EditProfile />}/>
-          <Route path="createateam" element={<CreateTeam />}/>
         </Route>
       </Routes>
     </AuthProvider>

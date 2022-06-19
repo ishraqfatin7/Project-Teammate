@@ -200,11 +200,9 @@ export default function EditProfile() {
                     className="select select-bordered w-full max-w-xs"
                   >
                     <option value="Student">Student</option>
-                    <option value=" IT"> IT</option>
-                    <option value=" Teacher"> Teacher</option>
-                    <option value=" Player"> Player</option>
-                    <option value=" Musician"> Musician</option>
-                    <option value=" None"> None</option>
+                    <option value="IT">IT</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="None">None</option>
                   </select>
                 </div>
 
@@ -216,7 +214,7 @@ export default function EditProfile() {
                     {...register("category")}
                     className="select select-bordered w-full max-w-xs"
                   >
-                    <option value="Gamer">Gamer</option>
+                    <option value="Gaming">Gaming</option>
                     <option value="Traveler">Traveler</option>
                   </select>
                 </div>
@@ -224,19 +222,14 @@ export default function EditProfile() {
                 {/* retype password */}
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text text-black">Country</span>
+                    <span className="label-text text-black">Region</span>
                   </label>
                   <select
-                    {...register("Country")}
+                    {...register("Region")}
                     className="select select-bordered w-full max-w-xs"
                   >
                     <option value="Bangladesh">Bangladesh</option>
-                    <option value=" Canada"> Canada</option>
-                    <option value=" Japan"> Japan</option>
-                    <option value=" Spain"> Spain</option>
-                    <option value=" Turkey"> Turkey</option>
-                    <option value=" Russia"> Russia</option>
-                    <option value=" USA"> USA</option>
+                    <option value="Global">Global</option>
                   </select>
                 </div>
                 <div className="form-control">
@@ -277,7 +270,7 @@ export default function EditProfile() {
                   <input
                     value="Save"
                     type="submit"
-                    className="btn bg-orange-500 text-black"
+                    className="btn bg-orange-500 hover:btn-primary text-black"
                   />
                 </div>
               </div>
