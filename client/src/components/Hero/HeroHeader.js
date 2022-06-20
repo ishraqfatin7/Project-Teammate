@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroHeader = () => {
   return (
@@ -10,12 +11,12 @@ const HeroHeader = () => {
         </p>
       </div>
       <div className="flex justify-center items-center mt-2 space-x-4">
-        <a
-          href="/#"
+        <Link
+          to="/createateam"
           className="btn btn-info text-lg font-bold"
         >
           Get started
-        </a>
+        </Link>
         <a
           className="bg-white text-lg text-amber-500 font-semibold underline"
           href="/#how"

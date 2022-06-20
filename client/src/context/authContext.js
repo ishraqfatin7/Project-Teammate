@@ -42,12 +42,14 @@ export function AuthProvider({ children }) {
     return signInWithPopup(auth, provider);
   };
 
-  const updateUserProfile = (name, imageUrl) => {
+  const updateUserProfile = (name, imageUrl, callback, errcallback) => {
     updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: imageUrl,
-    });
-    console.log(imageUrl);
+    })
+    .then(()=>callback())
+    .catch(error=>errcallback())
+    // console.log(imageUrl);
   };
   useEffect(() => {
     console.log("auth provider loader");

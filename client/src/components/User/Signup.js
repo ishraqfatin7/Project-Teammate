@@ -152,7 +152,7 @@ export default function Signup() {
                 <div className="form-control mt-6">
                   <input
                     type="submit"
-                    className="btn bg-orange-500 text-black"
+                    className="btn bg-orange-500 hover:btn-primary text-black"
                   />
                 </div>
 

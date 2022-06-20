@@ -71,7 +71,7 @@ client.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Server On For Teammate");
+  res.send("TeamMate server is online");
 });
 app.listen(port, () => {
   console.log("Listening to Port: ", port);

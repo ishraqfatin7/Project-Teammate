@@ -6,7 +6,7 @@ import axios from "axios";
 export default function EditProfile() {
   const { user, updateUserProfile } = useAuth();
   const navs = [
-    { item: `${user ? "Home" : "Sign In"}` },
+    { item: `${user ? "Dashboard" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
@@ -19,10 +19,11 @@ export default function EditProfile() {
   } = useForm();
   const [imageUrl, setImageUrl] = useState(null);
   const [response, setResponse] = useState({});
+  const [updated, setUpdated] = useState(null);
   const handleImageUpload = (event) => {
     console.log(event.target.files[0]);
     const imageData = new FormData();
-    imageData.set("key", "3553a276448dc98ad5f48955488e4ee7");
+    imageData.set("key", "3553a276448dc98ad5f48955488e4ee7"); //auth key should be hashed in a separate file
     imageData.append("image", event.target.files[0]);
 
     axios
@@ -46,7 +47,12 @@ export default function EditProfile() {
       category: data.category,
     };
     console.log(userData);
-    updateUserProfile(userData.firstName, userData.image);
+    updateUserProfile(
+      userData.firstName,
+      userData.image,
+      () => setUpdated(true),
+      () => setUpdated(false)
+    );
     const url = `http://localhost:5000/addUser`;
     fetch(url, {
       method: "POST",
@@ -62,15 +68,55 @@ export default function EditProfile() {
       .catch((error) => console.log(error));
   };
   //   console.log(errors);
+  const updatedText = (
+    <div className="alert alert-success shadow-lg">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current flex-shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>Profile updated successfully</span>
+      </div>
+    </div>
+  );
+  const errorText = (
+    <div className="alert alert-error shadow-lg">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current flex-shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>Profile update failed.</span>
+      </div>
+    </div>
+  );
   return (
     <Shell navs={navs}>
       <div className="hero min-h-screen ">
         {/* input card container for flex*/}
-
         <div className="hero-content flex-col ">
           <div className="text-center ">
             {/* head title */}
             <h1 className="text-5xl font-bold text-orange-500">Edit Profile</h1>
+            {updated ? updatedText : updated === false ? errorText : null}
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* input Form card */}
@@ -82,8 +128,10 @@ export default function EditProfile() {
                   </label>
                   <input
                     type="file"
+                    name="Picture"
+                    {...register("Picture", {})}
+                    className="select select-bordered w-full max-w-xs"
                     onChange={handleImageUpload}
-                    name=""
                     id=""
                   />
                 </div>
@@ -152,11 +200,9 @@ export default function EditProfile() {
                     className="select select-bordered w-full max-w-xs"
                   >
                     <option value="Student">Student</option>
-                    <option value=" IT"> IT</option>
-                    <option value=" Teacher"> Teacher</option>
-                    <option value=" Player"> Player</option>
-                    <option value=" Musician"> Musician</option>
-                    <option value=" None"> None</option>
+                    <option value="IT">IT</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="None">None</option>
                   </select>
                 </div>
 
@@ -165,10 +211,10 @@ export default function EditProfile() {
                     <span className="label-text text-black">Team Category</span>
                   </label>
                   <select
-                    {...register("categiry")}
+                    {...register("category")}
                     className="select select-bordered w-full max-w-xs"
                   >
-                    <option value="Gamer">Gamer</option>
+                    <option value="Gaming">Gaming</option>
                     <option value="Traveler">Traveler</option>
                   </select>
                 </div>
@@ -176,19 +222,14 @@ export default function EditProfile() {
                 {/* retype password */}
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text text-black">Country</span>
+                    <span className="label-text text-black">Region</span>
                   </label>
                   <select
-                    {...register("Country")}
+                    {...register("Region")}
                     className="select select-bordered w-full max-w-xs"
                   >
                     <option value="Bangladesh">Bangladesh</option>
-                    <option value=" Canada"> Canada</option>
-                    <option value=" Japan"> Japan</option>
-                    <option value=" Spain"> Spain</option>
-                    <option value=" Turkey"> Turkey</option>
-                    <option value=" Russia"> Russia</option>
-                    <option value=" USA"> USA</option>
+                    <option value="Global">Global</option>
                   </select>
                 </div>
                 <div className="form-control">
@@ -221,7 +262,7 @@ export default function EditProfile() {
                   />
                   <div className="text-red-500">
                     {errors.MobileNumber &&
-                      "Should be number and more than 6, less than 12 digits"}
+                      `Should be number less than 12 digits`}
                   </div>
                 </div>
                 {/* Sign up submit button */}
@@ -229,7 +270,7 @@ export default function EditProfile() {
                   <input
                     value="Save"
                     type="submit"
-                    className="btn bg-orange-500 text-black"
+                    className="btn bg-orange-500 hover:btn-primary text-black"
                   />
                 </div>
               </div>
