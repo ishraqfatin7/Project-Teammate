@@ -17,8 +17,8 @@ export default function Dashboard() {
       <h1 className="text-3xl p-5 text-slate-900 font-semibold">Dashboard</h1>
       <div className="flex ">
       <div className="drawer-side ">
-        <label for="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content min-h-screen">
+        <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+        <ul className="menu p-4 overflow-y-auto w-80 bg-slate-100 text-base-100 min-h-screen">
           <li>
             <a href="/"> Item 1</a>
           </li>

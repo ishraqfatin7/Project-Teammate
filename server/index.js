@@ -56,7 +56,7 @@ client.connect((err) => {
     const team = req.body;
     teamsCollection.insertOne(team).then((result) => {
       res.send(result.insertedCount > 0);
-      res.json(result);
+      // res.json(result);
     });
   });
 
