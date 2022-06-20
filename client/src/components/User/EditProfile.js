@@ -45,17 +45,19 @@ export default function EditProfile() {
       image: imageUrl,
       profession: data.Profession,
       category: data.category,
+      isProfileEdited: true,
     };
     console.log(userData);
     updateUserProfile(
       userData.firstName,
       userData.image,
+      userData.email,
       () => setUpdated(true),
       () => setUpdated(false)
     );
     const url = `http://localhost:5000/addUser`;
     fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },

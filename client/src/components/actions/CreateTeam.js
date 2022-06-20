@@ -10,7 +10,7 @@ export default function CreateTeam() {
   const { user } = useAuth();
   const [action, setAction] = useState(null);
   const [result, setResult] = useState(null);
-
+  const [response, setResponse] = useState({});
   const navs = [
     { item: `${user ? "Dashboard" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
@@ -23,25 +23,38 @@ export default function CreateTeam() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onBtn = (btn)=>{
+  const onBtn = (btn) => {
     setAction(btn);
     setResult(null);
-  }
+  };
   // set view to null after submission to render search result
   const onCreate = (data) => {
-    console.log(data);
+    const url = `http://localhost:5000/addTeam`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        setResponse(response);
+        console.log("From Server: ", response);
+      })
+      .catch((error) => console.log(error));
     setAction(null);
-    setResult('create');
+    setResult("create");
   };
   const onFind = (data) => {
     console.log(data);
     setAction(null);
-    setResult('find');
+    setResult("find");
   };
   // console.log(errors);
 
   // logical rendering view based on create or find button clicked
-  let view = null, resultView=null;
+  let view = null,
+    resultView = null;
   if (action === "create") {
     view = (
       <div className="hero-content flex-col ">
@@ -90,7 +103,7 @@ export default function CreateTeam() {
                   <span className="label-text text-black">Region</span>
                 </label>
                 <select
-                  {...register("Region")}
+                  {...register("region")}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value="Bangladesh">Bangladesh</option>
@@ -108,7 +121,6 @@ export default function CreateTeam() {
                 </label>
                 <textarea
                   placeholder="i.e team members, team requirements, team goals"
-                 
                   {...register("description", {
                     required: true,
                     maxLength: 100,
@@ -125,7 +137,7 @@ export default function CreateTeam() {
                   <span className="label-text text-black">Team Status</span>
                 </label>
                 <select
-                  {...register("Team Status")}
+                  {...register("status")}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value="Active">Active</option>
@@ -206,8 +218,19 @@ export default function CreateTeam() {
       </div>
     );
   }
-  if(result === "create") resultView = <div className="-mt-96">Team successfully created go to your <Link to="/dashboard"className="underline underline-offset-2 text-black">dashboard</Link></div>
-  else if(result === "find") resultView = <TeamSearchReasult/>
+  if (result === "create")
+    resultView = (
+      <div className="-mt-96">
+        Team successfully created go to your{" "}
+        <Link
+          to="/dashboard"
+          className="underline underline-offset-2 text-black"
+        >
+          dashboard
+        </Link>
+      </div>
+    );
+  else if (result === "find") resultView = <TeamSearchReasult />;
 
   return (
     <Shell navs={navs}>

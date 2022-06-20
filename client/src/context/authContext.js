@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+  updateEmail,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import initializeAuthentication from "../components/Authentication/Firebase/firebase.initialize";
@@ -42,22 +43,23 @@ export function AuthProvider({ children }) {
     return signInWithPopup(auth, provider);
   };
 
-  const updateUserProfile = (name, imageUrl, callback, errcallback) => {
+  const updateUserProfile = (name, imageUrl, email, callback, errcallback) => {
     updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: imageUrl,
     })
-    .then(()=>callback())
-    .catch(error=>errcallback())
+      .then(() => callback())
+      .catch((error) => errcallback());
     // console.log(imageUrl);
+    updateEmail(auth.currentUser, email);
   };
   useEffect(() => {
-    console.log("auth provider loader");
-    onAuthStateChanged(auth, (currentUser) => {
+    const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log({ currentUser });
       setUser(currentUser);
       setLoading(false);
     });
+    return () => unsubuscribe();
   }, []);
 
   return (

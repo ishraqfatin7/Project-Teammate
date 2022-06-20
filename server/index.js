@@ -23,6 +23,7 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
   const collection = client.db("TeammateDB").collection("users");
+  const teamsCollection = client.db("TeammateDB").collection("teams");
   console.log("Database Connected");
   app.get("/users", (req, res) => {
     collection.find().toArray((err, items) => {
@@ -39,21 +40,41 @@ client.connect((err) => {
       res.send(result.insertedCount > 0);
     });
   });
-  const filter = { email: "ishraqfatin71@gmail.com" };
-  const updateDoc = {
-    $set: {
-      email: "ishraqfatin81@gmail.com",
-    },
-  };
-  const options = { upsert: false };
-  const result = collection
-    .updateOne(filter, updateDoc, options)
-    .then((res, err) => {
-      if (!res.matchedCount) {
-        console.log("Need to insert data ");
-      }
-      //  console.log(err);
+
+  app.put("/addUser", async (req, res) => {
+    const user = req.body;
+    const filter = { email: user.email };
+    const updateDoc = {
+      $set: user,
+    };
+    const options = { upsert: true };
+    const result = await collection.updateOne(filter, updateDoc, options);
+    res.json(result);
+  });
+
+  app.post("/addTeam", async (req, res) => {
+    const team = req.body;
+    teamsCollection.insertOne(team).then((result) => {
+      res.send(result.insertedCount > 0);
+      res.json(result);
     });
+  });
+
+  // const filter = { email: "ishraqfatin71@gmail.com" };
+  // const updateDoc = {
+  //   $set: {
+  //     email: "ishraqfatin81@gmail.com",
+  //   },
+  // };
+
+  // const result = collection
+  //   .updateOne(filter, updateDoc, options)
+  //   .then((res, err) => {
+  //     if (!res.matchedCount) {
+  //       console.log("Need to insert data ");
+  //     }
+  //     //  console.log(err);
+  //   });
   // console.log(result);
   // perform actions on the collection object
   //client.close();
