@@ -16,7 +16,7 @@ export default function Team() {
               User.name
             </Link>
           </h3>
-          <div class="badge badge-primary">Team Type: Rescue</div>
+          <div className="badge badge-primary">Team Type: Rescue</div>
         </div>
         <p className="text-slate-700">
           Member:10

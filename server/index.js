@@ -54,9 +54,15 @@ client.connect((err) => {
 
   app.post("/addTeam", async (req, res) => {
     const team = req.body;
-    teamsCollection.insertOne(team).then((result) => {
+    await teamsCollection.insertOne(team).then((result) => {
       res.send(result.insertedCount > 0);
-      // res.json(result);
+      //res.json(result);
+    });
+  });
+  app.get("/teams", async (req, res) => {
+    await teamsCollection.find().toArray((err, items) => {
+      console.log("from database ", items);
+      res.send(items);
     });
   });
 

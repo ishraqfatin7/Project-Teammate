@@ -111,8 +111,7 @@ export default function EditProfile() {
     </div>
   );
   return (
-    <Shell navs={navs}>
-      <div className="hero min-h-screen ">
+      <div >
         {/* input card container for flex*/}
         <div className="hero-content flex-col ">
           <div className="text-center ">
@@ -280,6 +279,5 @@ export default function EditProfile() {
           </form>
         </div>
       </div>
-    </Shell>
   );
 }
