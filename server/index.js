@@ -23,6 +23,7 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
   const collection = client.db("TeammateDB").collection("users");
+  const teamsCollection = client.db("TeammateDB").collection("teams");
   console.log("Database Connected");
   app.get("/users", (req, res) => {
     collection.find().toArray((err, items) => {
@@ -47,7 +48,16 @@ client.connect((err) => {
       $set: user,
     };
     const options = { upsert: true };
-    const result = collection.updateOne(filter, updateDoc, options);
+    const result = await collection.updateOne(filter, updateDoc, options);
+    res.json(result);
+  });
+
+  app.post("/addTeam", async (req, res) => {
+    const team = req.body;
+    teamsCollection.insertOne(team).then((result) => {
+      res.send(result.insertedCount > 0);
+      res.json(result);
+    });
   });
 
   // const filter = { email: "ishraqfatin71@gmail.com" };

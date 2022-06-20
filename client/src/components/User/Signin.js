@@ -3,13 +3,16 @@ import React, { useContext, useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import initializeAuthentication from "../Authentication/Firebase/firebase.initialize";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Shell from "../Shell";
 // import { async } from "@firebase/util";
 import { useForm } from "react-hook-form";
 
 export default function Signin() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  let location = useLocation();
+
   const { signIn, user, googleSignIn } = useAuth();
   const handleGoogleSignIn = async () => {
     await googleSignIn()
@@ -33,10 +36,14 @@ export default function Signin() {
   const onSubmit = (data) => {
     signIn(data.email, data.password)
       .then(() => {
-        navigate(-1);
+        //navigate(-1);
+        const destination = location.pathname || "/";
+        navigate(destination);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.code);
+        console.log(error.code);
+        //  alert(error.message);
       });
   };
 
@@ -116,10 +123,33 @@ export default function Signin() {
                     </a>
                   </label>
                 </div>
+                {error ? (
+                  <div className="alert alert-error shadow-lg">
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current flex-shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>Invalid Email Or Password</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <div className="form-control mt-3">
                   <button className="btn bg-orange-500 hover:btn-primary text-black">
                     Login
                   </button>
+
                   <div className="divider text-black">OR</div>
                   <p className="py-3 hover: text-black m-auto">
                     Prefer Passwordless ?
