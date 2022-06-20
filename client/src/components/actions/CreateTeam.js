@@ -222,7 +222,7 @@ export default function CreateTeam() {
           FIND A TEAM
         </button>
       </div>
-      <div className="hero min-h-screen ">
+      <div className="hero min-h-screen">
         {view}
         {resultView}
       </div>
