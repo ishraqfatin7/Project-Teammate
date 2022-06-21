@@ -51,7 +51,7 @@ export function AuthProvider({ children }) {
       .then(() => callback())
       .catch((error) => errcallback());
     // console.log(imageUrl);
-    updateEmail(auth.currentUser, email);
+    // updateEmail(auth.currentUser, email);
   };
   useEffect(() => {
     const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {

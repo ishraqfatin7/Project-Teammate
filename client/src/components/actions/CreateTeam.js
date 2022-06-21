@@ -9,9 +9,9 @@ export default function CreateTeam() {
   const { user } = useAuth();
   const [action, setAction] = useState(null);
   const [result, setResult] = useState(null);
-  const [filteredTeams, setFilteredTeams] = useState(null);
+  const [filteredTeams, setFilteredTeams] = useState([]);
   const [form, setForm] = useState(null);
-  const [view, setView] = useState('');
+  const [view, setView] = useState(null);
   const [response, setResponse] = useState({});
   const navs = [
     { item: `${user ? "Dashboard" : "Sign In"}` },
@@ -32,7 +32,7 @@ export default function CreateTeam() {
 
   // create or find button traking to render form view
   const onBtn = (btn) => {
-    setView(null)
+    setView("");
     setForm(btn);
   };
 
@@ -49,11 +49,11 @@ export default function CreateTeam() {
     })
       .then((res) => {
         setResponse(res);
-        setView('success');
+        setView("success");
         console.log("From Server: ", res);
       })
       .catch((error) => {
-        setView('error');
+        setView("error");
         console.log(error);
       });
   };
@@ -69,6 +69,7 @@ export default function CreateTeam() {
     })
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
         setFilteredTeams(result);
       });
     setAction(null);
@@ -255,10 +256,10 @@ export default function CreateTeam() {
         </Link>
       </div>
     );
-  else if (result === "find")
+  } else if (result === "find")
     resultView = <TeamSearchReasult team={filteredTeams} />;
-  }
-  else if(view === "error") resultView = <div className="-mt-96">Team creation failed. Try again</div>;
+  else if (view === "error")
+    resultView = <div className="-mt-96">Team creation failed. Try again</div>;
 
   return (
     <Shell navs={navs}>
