@@ -29,7 +29,7 @@ export default function Dashboard() {
   ];
   const handleClick = (e) => {
     setActiveTab(e.target.id);
-    console.log(e.target.className)
+    // console.log(e.target.className)
   };
 
   return (
