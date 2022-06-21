@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Shell from "../Shell";
 import { useAuth } from "../../context/authContext";
-import Team from "./Team";
 import { useForm } from "react-hook-form";
 import TeamSearchReasult from "./TeamSearchReasult";
 import { Link } from "react-router-dom";
@@ -11,6 +10,8 @@ export default function CreateTeam() {
   const [action, setAction] = useState(null);
   const [result, setResult] = useState(null);
   const [filteredTeams, setFilteredTeams] = useState(null);
+  const [form, setForm] = useState(null);
+  const [view, setView] = useState('');
   const [response, setResponse] = useState({});
   const navs = [
     { item: `${user ? "Dashboard" : "Sign In"}` },
@@ -19,17 +20,25 @@ export default function CreateTeam() {
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];
+
+  // view rendering
+  let formView = null,
+    resultView = null;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  // create or find button traking to render form view
   const onBtn = (btn) => {
-    setAction(btn);
-    setResult(null);
+    setView(null)
+    setForm(btn);
   };
-  // set view to null after submission to render search result
-  const onCreate = (data) => {
+
+  // submission handle
+  const onCreate = async (data) => {
+    setForm(null);
     const url = `http://localhost:5000/addTeam`;
     fetch(url, {
       method: "POST",
@@ -38,14 +47,17 @@ export default function CreateTeam() {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        setResponse(response);
-        console.log("From Server: ", response);
+      .then((res) => {
+        setResponse(res);
+        setView('success');
+        console.log("From Server: ", res);
       })
-      .catch((error) => console.log(error));
-    setAction(null);
-    setResult("create");
+      .catch((error) => {
+        setView('error');
+        console.log(error);
+      });
   };
+  // set view to null after submission to render search result
   const onFind = (data) => {
     const url = `http://localhost:5000/filteredTeams`;
     fetch(url, {
@@ -61,14 +73,14 @@ export default function CreateTeam() {
       });
     setAction(null);
     setResult("find");
+    console.log(data);
+    setForm(null);
   };
   // console.log(errors);
 
   // logical rendering view based on create or find button clicked
-  let view = null,
-    resultView = null;
-  if (action === "create") {
-    view = (
+  if (form === "create") {
+    formView = (
       <div className="hero-content flex-col ">
         <div className="text-center ">
           <h1 className="text-5xl font-bold text-orange-500">Create Team</h1>
@@ -107,8 +119,8 @@ export default function CreateTeam() {
                   <option value="Traveler">Traveler</option>
                 </select>
                 {/* <div className="text-red-500">
-              {errors.password && "Password is required"}
-            </div> */}
+                  {errors.password && "Password is required"}
+                </div> */}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -122,8 +134,8 @@ export default function CreateTeam() {
                   <option value="Global">Global</option>
                 </select>
                 {/* <div className="text-red-500">
-              {errors.password && "Password is required"}
-            </div> */}
+                  {errors.password && "Password is required"}
+                </div> */}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -156,8 +168,8 @@ export default function CreateTeam() {
                   <option value="Inactive">Inactive</option>
                 </select>
                 {/* <div className="text-red-500">
-              {errors.password && "Password is required"}
-            </div> */}
+                  {errors.password && "Password is required"}
+                </div> */}
               </div>
               <div className="form-control mt-3">
                 <input
@@ -171,8 +183,8 @@ export default function CreateTeam() {
         </div>
       </div>
     );
-  } else if (action === "find") {
-    view = (
+  } else if (form === "find") {
+    formView = (
       <div className="hero-content flex-col ">
         <div className="text-center ">
           <h1 className="text-5xl font-bold text-orange-500">Find a Team</h1>
@@ -230,7 +242,8 @@ export default function CreateTeam() {
       </div>
     );
   }
-  if (result === "create")
+
+  if (response.status === 200 && view === "success") {
     resultView = (
       <div className="-mt-96">
         Team successfully created go to your{" "}
@@ -244,6 +257,8 @@ export default function CreateTeam() {
     );
   else if (result === "find")
     resultView = <TeamSearchReasult team={filteredTeams} />;
+  }
+  else if(view === "error") resultView = <div className="-mt-96">Team creation failed. Try again</div>;
 
   return (
     <Shell navs={navs}>
@@ -258,8 +273,8 @@ export default function CreateTeam() {
           FIND A TEAM
         </button>
       </div>
-      <div className="hero min-h-screen ">
-        {view}
+      <div className="hero min-h-screen">
+        {formView}
         {resultView}
       </div>
     </Shell>

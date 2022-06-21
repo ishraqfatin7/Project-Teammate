@@ -16,7 +16,9 @@ export default function Team({ comp }) {
               User.name
             </Link>
           </h3>
-          <div class="badge badge-primary">Team Type: {comp.teamCategory}</div>
+          <div className="badge badge-primary">
+            Team Type: {comp.teamCategory}
+          </div>
         </div>
         <p className="text-slate-700">
           Member:10
