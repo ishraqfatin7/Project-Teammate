@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 
 export default function CreateTeam() {
   const { user } = useAuth();
+  const [action, setAction] = useState(null);
+  const [result, setResult] = useState(null);
+  const [filteredTeams, setFilteredTeams] = useState([]);
   const [form, setForm] = useState(null);
   const [view, setView] = useState(null);
   const [response, setResponse] = useState({});
@@ -29,7 +32,7 @@ export default function CreateTeam() {
 
   // create or find button traking to render form view
   const onBtn = (btn) => {
-    setView(null)
+    setView("");
     setForm(btn);
   };
 
@@ -46,16 +49,31 @@ export default function CreateTeam() {
     })
       .then((res) => {
         setResponse(res);
-        setView('success');
+        setView("success");
         console.log("From Server: ", res);
       })
       .catch((error) => {
-        setView('error');
+        setView("error");
         console.log(error);
       });
   };
   // set view to null after submission to render search result
   const onFind = (data) => {
+    const url = `http://localhost:5000/filteredTeams`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setFilteredTeams(result);
+      });
+    setAction(null);
+    setResult("find");
     console.log(data);
     setForm(null);
   };
@@ -193,7 +211,7 @@ export default function CreateTeam() {
                   <span className="label-text text-black">Region</span>
                 </label>
                 <select
-                  {...register("Region")}
+                  {...register("region")}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value="Bangladesh">Bangladesh</option>
@@ -205,7 +223,7 @@ export default function CreateTeam() {
                   <span className="label-text text-black">Team Status</span>
                 </label>
                 <select
-                  {...register("Team Status")}
+                  {...register("status")}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value="Active">Active</option>
@@ -238,8 +256,10 @@ export default function CreateTeam() {
         </Link>
       </div>
     );
-  }
-  else if(view === "error") resultView = <div className="-mt-96">Team creation failed. Try again</div>;
+  } else if (result === "find")
+    resultView = <TeamSearchReasult team={filteredTeams} />;
+  else if (view === "error")
+    resultView = <div className="-mt-96">Team creation failed. Try again</div>;
 
   return (
     <Shell navs={navs}>

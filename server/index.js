@@ -31,6 +31,23 @@ client.connect((err) => {
       res.send(items);
     });
   });
+  app.post("/filteredTeams", async (req, res) => {
+    const team = req.body;
+
+    const filter = {
+      teamCategory: team.teamCategory,
+      region: team.region,
+      status: team.status,
+    };
+    console.log(filter);
+    await teamsCollection
+      .find(filter)
+      .toArray()
+      .then((result) => {
+        console.log(result);
+        res.send(result);
+      });
+  });
 
   app.post("/addUser", (req, res) => {
     const newUser = req.body;
