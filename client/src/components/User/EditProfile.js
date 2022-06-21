@@ -115,10 +115,8 @@ export default function EditProfile() {
     </div>
   );
   return (
-    <div>
-      {/* input card container for flex*/}
       <div className="hero-content flex-col ">
-        <div className="text-center ">
+        <div className="text-center">
           {/* head title */}
           <h1 className="text-5xl font-bold text-orange-500">Edit Profile</h1>
           {updated ? updatedText : updated === false ? errorText : null}
@@ -282,6 +280,5 @@ export default function EditProfile() {
           </div>
         </form>
       </div>
-    </div>
   );
 }

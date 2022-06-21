@@ -22,7 +22,7 @@ export default function Signup() {
         .then((userCredential) => {
           // Signed in
           // const user = userCredential.user; user already defined
-           navigate(-1);
+          navigate(-2, { replace: true });
           // ...
         })
         .catch((error) => {
@@ -36,26 +36,30 @@ export default function Signup() {
     }
   };
   let navs = [
-    { item: `${user ? "Home" : "Sign In"}` },
-    { item: `${user ? "Profile" : "Sign Up"}` },
+    { item: `${user ? "All Teams" : "All Teams"}` },
+    { item: `${user ? "Profile" : "Sign In"}` },
     { item: "Create a team" },
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];
   return user ? (
     <Shell navs={navs}>
-      <h1 className="text-5xl font-bold text-orange-500 m-auto">
-        You are already logged in
-      </h1>
-      <p>
-        go to your{" "}
-        <Link
-          to="../dashboard"
-          className="underline underline-offset-2 text-black"
-        >
-          dashboard
-        </Link>
-      </p>
+      <div className="hero">
+        <div className="hero-content flex-col">
+          <h1 className="text-5xl font-bold text-orange-500 m-auto">
+            You are already logged in
+          </h1>
+          <p>
+            go to your{" "}
+            <Link
+              to="../dashboard"
+              className="underline underline-offset-2 text-black"
+            >
+              dashboard
+            </Link>
+          </p>
+        </div>
+      </div>
     </Shell>
   ) : (
     <Shell navs={navs}>
@@ -87,11 +91,27 @@ export default function Signup() {
                     defaultValue=""
                     {...register("name", { required: true })}
                     type="text"
-                    placeholder="Name"
+                    placeholder="name"
                     className="input input-bordered"
                   />
                   <div className="text-red-500">
                     {errors.name && "Name is required"}
+                  </div>
+                </div>
+              {/* User name */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-black">User name</span>
+                  </label>
+                  <input
+                    defaultValue=""
+                    {...register("username", { required: true })}
+                    type="text"
+                    placeholder="username"
+                    className="input input-bordered"
+                  />
+                  <div className="text-red-500">
+                    {errors.name && "User name is required"}
                   </div>
                 </div>
 
@@ -140,7 +160,7 @@ export default function Signup() {
                     defaultValue=""
                     {...register("retypePass", { required: true })}
                     type="password"
-                    placeholder="Retype password"
+                    placeholder="retype password"
                     className="input input-bordered"
                   />
                   <div className="text-red-500">

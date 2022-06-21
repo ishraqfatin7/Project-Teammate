@@ -17,7 +17,7 @@ export default function Signin() {
   const handleGoogleSignIn = async () => {
     await googleSignIn()
       .then(() => {
-        navigate(-1);
+        navigate(-2, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -48,7 +48,7 @@ export default function Signin() {
   };
 
   let navs = [
-    { item: `${user ? "Home" : "Sign In"}` },
+    { item: `${user ? "All Teams" : "All Teams"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
@@ -56,18 +56,22 @@ export default function Signin() {
   ];
   return user ? (
     <Shell navs={navs}>
-      <h1 className="text-5xl font-bold text-orange-500 m-auto">
-        You are already logged in
-      </h1>
-      <p>
-        go to your{" "}
-        <Link
-          to="../dashboard"
-          className="underline underline-offset-2 text-black"
-        >
-          dashboard
-        </Link>
-      </p>
+      <div className="hero">
+        <div className="hero-content flex-col">
+          <h1 className="text-5xl font-bold text-orange-500 m-auto">
+            You are already logged in
+          </h1>
+          <p>
+            go to your{" "}
+            <Link
+              to="../dashboard"
+              className="underline underline-offset-2 text-black"
+            >
+              dashboard
+            </Link>
+          </p>
+        </div>
+      </div>
     </Shell>
   ) : (
     <Shell navs={navs}>
@@ -89,13 +93,16 @@ export default function Signin() {
                   {/* <label className="label">
                     <span className="label-text text-black">Email</span>
                   </label> */}
-                  <input
-                    defaultValue=""
-                    {...register("email", { required: true })}
-                    type="text"
-                    placeholder="Enter your E-mail"
-                    className="input input-bordered"
-                  />
+                  <label className="input-group">
+                    <span className="input-group">E-mail</span>
+                    <input
+                      defaultValue=""
+                      {...register("email", { required: true })}
+                      type="text"
+                      placeholder="Enter your E-mail"
+                      className="input input-bordered"
+                    />
+                  </label>
                   <div className="text-red-500">
                     {errors.email && "Email is required"}
                   </div>
@@ -104,13 +111,16 @@ export default function Signin() {
                   {/* <label className="label">
                     <span className="label-text text-black">Password</span>
                   </label> */}
-                  <input
-                    defaultValue=""
-                    {...register("password", { required: true })}
-                    type="text"
-                    placeholder="Enter your password"
-                    className="input input-bordered"
-                  />
+                  <label className="input-group">
+                    <span>Password</span>
+                    <input
+                      defaultValue=""
+                      {...register("password", { required: true })}
+                      type="password"
+                      placeholder="Enter your password"
+                      className="input input-bordered"
+                    />
+                  </label>
                   <div className="text-red-500">
                     {errors.password && "Password is required"}
                   </div>

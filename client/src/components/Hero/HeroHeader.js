@@ -12,7 +12,7 @@ const HeroHeader = () => {
       </div>
       <div className="flex justify-center items-center mt-2 space-x-4">
         <Link
-          to="/createateam"
+          to="/allteams"
           className="btn btn-info text-lg font-bold"
         >
           Get started

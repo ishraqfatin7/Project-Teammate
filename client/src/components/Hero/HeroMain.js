@@ -27,7 +27,7 @@ let cards = [
     icon: mini1,
     text: "Select Catagory",
   },
-  { icon: mini2, text: "Search Profiles" },
+  { icon: mini2, text: "Search Teams" },
   { icon: mini3, text: "Find or Join" },
   { icon: mini4, text: "Chat with them" },
 ];
