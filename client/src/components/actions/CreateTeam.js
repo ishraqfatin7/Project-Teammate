@@ -10,6 +10,7 @@ export default function CreateTeam() {
   const { user } = useAuth();
   const [action, setAction] = useState(null);
   const [result, setResult] = useState(null);
+  const [filteredTeams, setFilteredTeams] = useState(null);
   const [response, setResponse] = useState({});
   const navs = [
     { item: `${user ? "Dashboard" : "Sign In"}` },
@@ -46,7 +47,18 @@ export default function CreateTeam() {
     setResult("create");
   };
   const onFind = (data) => {
-    console.log(data);
+    const url = `http://localhost:5000/filteredTeams`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setFilteredTeams(result);
+      });
     setAction(null);
     setResult("find");
   };
@@ -186,7 +198,7 @@ export default function CreateTeam() {
                   <span className="label-text text-black">Region</span>
                 </label>
                 <select
-                  {...register("Region")}
+                  {...register("region")}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value="Bangladesh">Bangladesh</option>
@@ -198,7 +210,7 @@ export default function CreateTeam() {
                   <span className="label-text text-black">Team Status</span>
                 </label>
                 <select
-                  {...register("Team Status")}
+                  {...register("status")}
                   className="select select-bordered w-full max-w-xs"
                 >
                   <option value="Active">Active</option>
@@ -230,7 +242,8 @@ export default function CreateTeam() {
         </Link>
       </div>
     );
-  else if (result === "find") resultView = <TeamSearchReasult />;
+  else if (result === "find")
+    resultView = <TeamSearchReasult team={filteredTeams} />;
 
   return (
     <Shell navs={navs}>
