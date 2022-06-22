@@ -37,7 +37,7 @@ export default function Signin() {
     signIn(data.email, data.password)
       .then(() => {
         //navigate(-1);
-        const destination = location.pathname || "/";
+        const destination = location?.state?.from || "/";
         navigate(destination);
       })
       .catch((error) => {

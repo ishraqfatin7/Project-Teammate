@@ -6,7 +6,8 @@ import Shell from "../Shell";
 
 export default function Signup() {
   const { signUp, user } = useAuth();
-
+  const [response, setResponse] = useState({});
+  const [available, setAvailable] = useState(null);
   const [error, setError] = useState();
   const navigate = useNavigate();
   const {
@@ -15,25 +16,74 @@ export default function Signup() {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const isUserNameAvailable = (data) => {
     console.log(data);
-    if (data.password === data.retypePass) {
-      signUp(data.email, data.password)
-        .then((userCredential) => {
-          // Signed in
-          // const user = userCredential.user; user already defined
-          navigate(-2, { replace: true });
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-          setError(errorCode);
-        });
-    } else {
-      // show error div;
-    }
+    const url = `http://localhost:5000/users`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setAvailable(result);
+        //setView("successFind");
+      })
+      .catch((error) => {
+        // setView("errorFind");
+        console.log(error);
+      });
+    console.log(data);
+  };
+
+  const onSubmit = (data) => {
+    isUserNameAvailable(data);
+    console.log(available);
+    if (!available) {
+      console.log(data);
+      const userData = {
+        userName: data.username,
+        email: data.email,
+        password: data.password,
+        isProfileEdited: false,
+      };
+      if (data.password === data.retypePass) {
+        signUp(data.email, data.password)
+          .then((userCredential) => {
+            sendUserData(data);
+            // Signed in
+            // const user = userCredential.user; user already defined
+            navigate(-2, { replace: true });
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            setError(errorCode);
+          });
+      } else {
+        // show err div
+        console.log("password dont match");
+      }
+    } else console.log("Username not available\n Try another one");
+  };
+  const sendUserData = (userData) => {
+    const url = `http://localhost:5000/addUser`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        setResponse(response);
+        console.log("From Server: ", response);
+      })
+      .catch((error) => console.log(error));
   };
   let navs = [
     { item: `${user ? "All Teams" : "All Teams"}` },
@@ -98,7 +148,7 @@ export default function Signup() {
                     {errors.name && "Name is required"}
                   </div>
                 </div>
-              {/* User name */}
+                {/* User name */}
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text text-black">User name</span>

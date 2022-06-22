@@ -31,6 +31,19 @@ client.connect((err) => {
       res.send(items);
     });
   });
+  app.post("/users", (req, res) => {
+    const user = req.body;
+    const query = { username: user.username };
+    //console.log(query);
+
+    const isFound = collection.countDocuments(query).then((result) => {
+      res.send(result > 0);
+    });
+
+    // console.log(isFound);
+    //res.send(isFound);
+  });
+
   app.post("/filteredTeams", async (req, res) => {
     const team = req.body;
 
@@ -39,7 +52,7 @@ client.connect((err) => {
       region: team.region,
       status: team.status,
     };
-    console.log(filter);
+    //console.log(filter);
     await teamsCollection
       .find(filter)
       .toArray()
@@ -53,7 +66,7 @@ client.connect((err) => {
     const newUser = req.body;
     console.log("Adding New User ", newUser);
     collection.insertOne(newUser).then((result) => {
-      console.log("inserted count", result.insertedCount);
+      //  console.log("inserted count", result.insertedCount);
       res.send(result.insertedCount > 0);
     });
   });
@@ -78,8 +91,25 @@ client.connect((err) => {
   });
   app.get("/teams", async (req, res) => {
     await teamsCollection.find().toArray((err, items) => {
-      console.log("from database ", items);
+      //  console.log("from database ", items);
       res.send(items);
+    });
+  });
+  app.get("/users/:id", (req, res) => {
+    //   const id = ObjectId(req.params.id);
+    console.log(req.params.id);
+    const id = req.params.id;
+    collection.find({ username: id }).toArray((err, documents) => {
+      res.send(documents);
+    });
+  });
+  app.get("/teams/:id", (req, res) => {
+    const id = ObjectId(req.params.id);
+    console.log(id);
+    // console.log(req.params.id);
+    //const id = req.params.id;
+    teamsCollection.find({ _id: id }).toArray((err, documents) => {
+      res.send(documents[0]);
     });
   });
 
@@ -101,11 +131,11 @@ client.connect((err) => {
   // console.log(result);
   // perform actions on the collection object
   //client.close();
-});
 
-app.get("/", (req, res) => {
-  res.send("TeamMate server is online");
-});
-app.listen(port, () => {
-  console.log("Listening to Port: ", port);
+  app.get("/", (req, res) => {
+    res.send("TeamMate server is online");
+  });
+  app.listen(port, () => {
+    console.log("Listening to Port: ", port);
+  });
 });

@@ -13,6 +13,7 @@ import EditProfile from "./components/User/EditProfile";
 import CreateTeam from "./components/team/CreateTeam";
 import NotFound from "./components/Hero/NotFound";
 import PublicTeamList from "./components/team/PublicTeamList";
+import TeamRequest from "./components/team/TeamRequest";
 export const UserContext = createContext({});
 function App() {
   return (
@@ -23,16 +24,17 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/aboutus" element={<About />} />
-        <Route path="/logout" element={<Logout />}/>
-        <Route path="/allteams" element={<PublicTeamList/>}/>
-        <Route path="/*" element={<NotFound/>} />
-        <Route path="/*" element={<PrivateRoute/>}>
-          <Route path="dashboard" element={<Dashboard />}/>
-          <Route path="createateam" element={<CreateTeam />}/>
-          <Route path="profile" element={<Profile />}/>
-          <Route path="editprofile" element={<EditProfile />}/>
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/allteams" element={<PublicTeamList />} />
+        <Route path="/*" element={<NotFound />} />
+
+        <Route path="/*" element={<PrivateRoute />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="createateam" element={<CreateTeam />} />
+          <Route path="profile/:id" element={<Profile />} />
+          <Route path="teams/:id" element={<TeamRequest />} />
+          <Route path="editprofile" element={<EditProfile />} />
         </Route>
-        
       </Routes>
     </AuthProvider>
   );

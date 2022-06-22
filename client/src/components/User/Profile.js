@@ -1,9 +1,12 @@
 import React from "react";
 import Shell from "../Shell";
 import { useAuth } from "../../context/authContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Profile() {
+  const { id } = useParams();
+  console.log(id);
   const { user } = useAuth();
   const navigate = useNavigate();
   const navs = [
@@ -13,7 +16,22 @@ export default function Profile() {
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];
-
+  useEffect(() => {
+    const url = `http://localhost/5000/profile/${id}`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("From Server: ", result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
   const handleClick = () => {
     navigate("/editprofile", { replace: true });
   };

@@ -24,8 +24,14 @@ export function AuthProvider({ children }) {
   const auth = getAuth();
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const signUp = async (email, password) =>
+  const signUp = async (email, password) => {
     await createUserWithEmailAndPassword(auth, email, password);
+    updateProfile(auth.currentUser, {
+      photoURL:
+        "https://i.ibb.co/GJZYgBD/user-icon-human-person-sign-vector-10206693.png",
+    });
+  };
+
   const signIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -54,12 +60,12 @@ export function AuthProvider({ children }) {
     // updateEmail(auth.currentUser, email);
   };
   useEffect(() => {
-    const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log({ currentUser });
       setUser(currentUser);
       setLoading(false);
     });
-    return () => unsubuscribe();
+    return () => unsubscribe();
   }, []);
 
   return (
