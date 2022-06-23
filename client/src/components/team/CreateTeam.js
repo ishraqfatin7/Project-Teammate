@@ -37,6 +37,15 @@ export default function CreateTeam() {
 
   // submission handle
   const onCreate = async (data) => {
+    console.log(data);
+    const teamData = {
+      teamName: data.teamName,
+      teamCategory: data.category,
+      teamRegion: data.region,
+      teamDescription: data.description,
+      teamStatus: data.status,
+      teamCreator: user.email,
+    };
     setForm(null);
     const url = `http://localhost:5000/addTeam`;
     fetch(url, {
@@ -44,7 +53,7 @@ export default function CreateTeam() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(teamData),
     })
       .then((res) => {
         setResponse(res);
@@ -58,6 +67,8 @@ export default function CreateTeam() {
   };
   // set view to null after submission to render search result
   const onFind = (data) => {
+    console.log(data);
+
     setForm(null);
     const url = `http://localhost:5000/filteredTeams`;
     fetch(url, {
