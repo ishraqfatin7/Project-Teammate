@@ -14,7 +14,7 @@ export default function TeamCard({ comp }) {
     <div className="card w-80 sm:w-96 bg-slate-200 shadow-xl">
       <div className="card-body">
         <h1 className="card-title text-3xl text-slate-900">{comp.teamName}</h1>
-        <div className="flex flex-wrap space-x-3 space-y-3 sm:space-y-0 justify-start content-start">
+        <div className="flex flex-wrap space-x-3 space-y-3 justify-start content-start">
           <h3 className="badge text-slate-100">
             created by--
             <Link

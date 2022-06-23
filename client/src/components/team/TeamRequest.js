@@ -7,7 +7,7 @@ const TeamRequest = () => {
   const { user } = useAuth();
   let navs = [
     { item: `${user ? "Dashboard" : "Sign In"}` },
-    { item: `${user ? "Profile" : "Sign Up"}` },
+    { item: `${user ? "Home" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },

@@ -14,7 +14,7 @@ export default function CreateTeam() {
   const navs = [
     { item: "All Teams" },
     { item: `${user ? "Dashboard" : "Sign In"}` },
-    { item: `${user ? "Profile" : "Sign Up"}` },
+    { item: `${user ? "Home" : "Sign Up"}` },
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];

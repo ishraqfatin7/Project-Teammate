@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [teams, setTeams] = useState([]);
   let navs = [
     { item: `${user ? "All Teams" : "Sign In"}` },
-    { item: `${user ? "Profile" : "Sign Up"}` },
+    { item: `${user ? "Home" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },

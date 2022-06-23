@@ -14,7 +14,7 @@ export default function Home() {
   const user = useAuth();
   let navs = [
     { item: `${user.user ? "Dashboard" : "Sign In"}` },
-    { item: `${user.user ? "Profile" : "Sign Up"}` },
+    { item: `${user.user ? "Home" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
     { item: `${user.user ? "Log out" : ""}` },

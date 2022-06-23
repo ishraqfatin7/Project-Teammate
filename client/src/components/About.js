@@ -8,7 +8,7 @@ export default function About() {
   const navs = [
     { item: "All Teams" },
     { item: `${user.user ? "Dashboard" : "Sign In"}` },
-    { item: `${user.user ? "Profile" : "Sign Up"}` },
+    { item: `${user.user ? "Home" : "Sign Up"}` },
     { item: "Create a team" },
     { item: `${user.user ? "Log out" : ""}` },
   ];
