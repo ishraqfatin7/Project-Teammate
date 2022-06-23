@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "../context/authContext";
+import HeroMain from "./Hero/HeroMain";
 import Shell from "./Shell";
 
 export default function About() {
@@ -16,6 +17,7 @@ export default function About() {
       <h1 className="text-3xl p-5 text-slate-900 font-semibold text-center">
         About Us
       </h1>
+      <HeroMain></HeroMain>
     </Shell>
   );
 }

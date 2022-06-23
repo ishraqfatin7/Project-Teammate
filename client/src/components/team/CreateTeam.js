@@ -39,7 +39,7 @@ export default function CreateTeam() {
     console.log(data);
     const teamData = {
       teamName: data.teamName,
-      teamCategory: data.category,
+      teamCategory: data.teamCategory,
       teamRegion: data.region,
       teamDescription: data.description,
       teamStatus: data.status,
@@ -262,7 +262,7 @@ export default function CreateTeam() {
   // response view rendering
   if (response.status === 200 && view === "successCreate") {
     resultView = (
-      <div className="-mt-96">
+      <div className="mt-20">
         Team successfully created go to your{" "}
         <Link
           to="/dashboard"

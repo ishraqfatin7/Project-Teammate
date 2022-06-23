@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import { Navigate, useLocation} from "react-router-dom";
-import getUser from "../../lib/getUser";
 import Shell from "../Shell";
 
-export default function Profile() {
-  const location = useLocation();
-  const [userData, setUserData] = useState();
+export default function UserProfile() {
   const { user } = useAuth();
+  const { id } = useParams();
   const navs = [
     { item: "All Teams" },
     { item: `${user ? "Dashboard" : "Sign In"}` },
@@ -15,13 +13,22 @@ export default function Profile() {
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];
-//   useEffect(()=>{
-//     getUser(user.email, setUserData)
-//   },[user.email])
-//   console.log(userData);
-// const {username} = userData;
-
-
+  useEffect(() => {
+    const url = `http://localhost/5000/profile/${id}`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("From Server: ", result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
   return (
     <Shell navs={navs}>
       <div className="hero">
@@ -30,6 +37,5 @@ export default function Profile() {
         </div>
       </div>
     </Shell>
-      // <Navigate to={`/profile/${username}`} state={{ from: location }} />
   );
 }

@@ -1,5 +1,5 @@
  const getUser = async(email, setUserData)=> {
-  const userUrl = `http://localhost:5000/users/getuser/${email}`;
+  const userUrl = `http://localhost:5000/users/user/${email}`;
   fetch(userUrl, {
     method: "GET",
     headers: {
