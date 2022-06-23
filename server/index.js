@@ -96,22 +96,21 @@ client.connect((err) => {
       res.send(items);
     });
   });
-  app.get("/users/:id", async (req, res) => {
+  app.get("/users/:username", (req, res) => {
     //   const id = ObjectId(req.params.id);
-    //  console.log(req.params.id);
-    const id = req.params.id;
-    await collection.find({ username: id }).toArray((err, documents) => {
-      res.send(documents);
+    console.log(req.params.username);
+    const username = req.params.username;
+    collection.find({ username: username }).toArray((err, documents) => {
+      res.send(documents[0]);
     });
   });
-  app.get("/users/user/:email", async (req, res) => {
+  app.get("/users/getuser/:email", async (req, res) => {
     const query = { email: req.params.email };
     const result = await collection.findOne(query);
     res.send(result);
   });
   app.get("/teams/:id", (req, res) => {
     const id = ObjectId(req.params.id);
-
     // console.log(req.params.id);
     //const id = req.params.id;
     teamsCollection.find({ _id: id }).toArray((err, documents) => {

@@ -60,7 +60,8 @@ const TeamRequest = () => {
           <h1 className="text-3xl text-slate-900 font-semibold">
             {teamData.teamName}
           </h1>
-          <p>{teamData.description}</p>
+          <p>{teamData.teamDescription}</p>
+          <button className="btn btn-primary">Request</button>
         </div>
       </div>
     </Shell>

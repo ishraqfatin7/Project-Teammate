@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/authContext";
 import { useForm } from "react-hook-form";
-//import { generateFromEmail, generateUsername } from "unique-username-generator";
-import Shell from "../Shell";
 import axios from "axios";
+
 export default function EditProfile() {
   const { user, updateUserProfile } = useAuth();
-  const navs = [
-    { item: `${user ? "Dashboard" : "Sign In"}` },
-    { item: `${user ? "Profile" : "Sign Up"}` },
-    { item: "Create a team" },
-    { item: "About Us" },
-    { item: `${user ? "Log out" : ""}` },
-  ];
+
   const {
     register,
     handleSubmit,
@@ -140,12 +133,12 @@ export default function EditProfile() {
             {/* name input */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-black">First Name</span>
+                <span className="label-text text-black">Name</span>
               </label>
               <input
                 type="text"
-                placeholder="First name"
-                {...register("FirstName", {
+                placeholder="name"
+                {...register("name", {
                   required: true,
                   maxLength: 80,
                 })}
@@ -153,23 +146,6 @@ export default function EditProfile() {
               />
               <div className="text-red-500">
                 {errors.FirstName && "Enter First name required"}
-              </div>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Last Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Last name"
-                {...register("LastName", {
-                  required: true,
-                  maxLength: 100,
-                })}
-                className="input input-bordered"
-              />
-              <div className="text-red-500">
-                {errors.LastName && "Enter Last name required"}
               </div>
             </div>
 

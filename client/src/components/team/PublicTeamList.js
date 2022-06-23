@@ -4,14 +4,13 @@ import { useAuth } from "../../context/authContext";
 import Shell from "../Shell";
 import TeamSearchResult from "./TeamSearchResult";
 
-
 export default function PublicTeamList() {
+  const {user} = useAuth();
   const [response, setResponse] = useState([]);
   const [view, setView] = useState(null);
-  const url = `http://localhost:5000/teams`;
-
+  const teamUrl = `http://localhost:5000/teams`;
   useEffect(() => {
-    fetch(url, {
+    fetch(teamUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,18 +27,15 @@ export default function PublicTeamList() {
         console.log(error);
       });
   }, []);
-
-  const user = useAuth();
   let navs = [
-    { item: `${user.user ? "Dashboard" : "Sign In"}` },
-    { item: `${user.user ? "Profile" : "Sign Up"}` },
+    { item: `${user ? "Dashboard" : "Sign In"}` },
+    { item: `${user ? "Profile" : "Sign Up"}` },
     { item: "Create a team" },
     { item: "About Us" },
-    { item: `${user.user ? "Log out" : ""}` },
+    { item: `${user ? "Log out" : ""}` },
   ];
   return (
     <Shell navs={navs}>
-      {console.log("rendered")}
       <h1 className="text-3xl p-5 text-slate-900 font-semibold text-center">
         Join any teams!
       </h1>

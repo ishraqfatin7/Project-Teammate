@@ -5,7 +5,9 @@ import Sidebar from "../Navbar/Sidebar";
 import SidebarMobile from "../Navbar/SidebarMobile";
 import Shell from "../Shell";
 import EditProfile from "./EditProfile";
+import JoinedTeams from "./JoinedTeams";
 import MyTeams from "./MyTeams";
+import RequestedTeams from "./RequestedTeams";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -46,6 +48,16 @@ export default function Dashboard() {
     },
     {
       id: 1,
+      name: "Requested Teams",
+      component: <RequestedTeams />,
+    },
+    {
+      id: 2,
+      name: "Joined Teams",
+      component: <JoinedTeams />,
+    },
+    {
+      id: 3,
       name: "Edit Profile",
       component: <EditProfile />,
     },
