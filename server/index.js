@@ -100,6 +100,17 @@ client.connect((err) => {
       //res.json(result);
     });
   });
+
+  app.put("/addTeam", async (req, res) => {
+    const teamdata = req.body;
+    console.log(teamdata);
+    const filter = { teamdata };
+    const updateDoc = {
+      $set: teamdata,
+    };
+    // const result = await teamsCollection.updateOne(filter, updateDoc, options);
+    // res.json(result);
+  });
   app.get("/teams", async (req, res) => {
     await teamsCollection.find().toArray((err, items) => {
       //  console.log("from database ", items);
