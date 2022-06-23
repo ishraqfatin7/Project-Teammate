@@ -111,6 +111,7 @@ client.connect((err) => {
   });
   app.get("/teams/:id", (req, res) => {
     const id = ObjectId(req.params.id);
+
     // console.log(req.params.id);
     //const id = req.params.id;
     teamsCollection.find({ _id: id }).toArray((err, documents) => {
