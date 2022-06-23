@@ -4,7 +4,9 @@ import Sidebar from "../Navbar/Sidebar";
 import SidebarMobile from "../Navbar/SidebarMobile";
 import Shell from "../Shell";
 import EditProfile from "./EditProfile";
+import JoinedTeams from "./JoinedTeams";
 import MyTeams from "./MyTeams";
+import RequestedTeams from "./RequestedTeams";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -24,6 +26,16 @@ export default function Dashboard() {
     },
     {
       id: 1,
+      name: "Requested Teams",
+      component: <RequestedTeams />,
+    },
+    {
+      id: 2,
+      name: "Joined Teams",
+      component: <JoinedTeams />,
+    },
+    {
+      id: 3,
       name: "Edit Profile",
       component: <EditProfile />,
     },
@@ -36,7 +48,9 @@ export default function Dashboard() {
   return (
     <Shell navs={navs}>
       <div className="">
-        <h1 className="text-3xl p-5 text-slate-900 font-semibold text-center">Dashboard</h1>
+        <h1 className="text-3xl p-5 text-slate-900 font-semibold text-center">
+          Dashboard
+        </h1>
         <div className="flex">
           <Sidebar
             SideNavContents={SideNavContents}

@@ -15,7 +15,6 @@ export default function CreateTeam() {
     { item: "All Teams" },
     { item: `${user ? "Dashboard" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
-    { item: "Create a team" },
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];
@@ -39,6 +38,10 @@ export default function CreateTeam() {
   const onCreate = async (data) => {
     setForm(null);
     const url = `http://localhost:5000/addTeam`;
+    let payload = {
+      ...data,
+      
+    }
     fetch(url, {
       method: "POST",
       headers: {
