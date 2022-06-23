@@ -1,6 +1,24 @@
 import React from "react";
 
 const EachTeam = ({ team }) => {
+  const handleClick = () => {
+    const teamData = {
+      teamAccepted: true,
+    };
+    //console.log("clicked");
+    const url = `http://localhost:5000/addTeam`;
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(teamData),
+    })
+      .then((response) => {
+        console.log("From Server: ", response);
+      })
+      .catch((error) => console.log(error));
+  };
   console.log(team);
   return (
     <div className="card w-80 sm:w-96 bg-slate-200 shadow-xl mt-2">
@@ -14,8 +32,11 @@ const EachTeam = ({ team }) => {
         </div>
         <p className="text-slate-700">{team.teamDescription}</p>
         <div className="card-actions justify-end">
-          <button className="btn bg-orange-500 hover:btn-primary text-black">
-            Current
+          <button
+            onClick={handleClick}
+            className="btn bg-orange-500 hover:btn-primary text-black"
+          >
+            Accept Request
           </button>
         </div>
       </div>

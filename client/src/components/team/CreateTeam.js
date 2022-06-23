@@ -44,13 +44,13 @@ export default function CreateTeam() {
       teamDescription: data.description,
       teamStatus: data.status,
       teamCreator: user.email,
+      teamAccepted: false,
     };
     setForm(null);
     const url = `http://localhost:5000/addTeam`;
     let payload = {
       ...data,
-      
-    }
+    };
     fetch(url, {
       method: "POST",
       headers: {
