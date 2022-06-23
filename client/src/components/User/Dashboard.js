@@ -8,6 +8,7 @@ import EditProfile from "./EditProfile";
 import JoinedTeams from "./JoinedTeams";
 import MyTeams from "./MyTeams";
 import RequestedTeams from "./RequestedTeams";
+import UserRequests from "./UserRequests";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -58,6 +59,11 @@ export default function Dashboard() {
     },
     {
       id: 3,
+      name: "Team Requests",
+      component: <UserRequests />,
+    },
+    {
+      id: 4,
       name: "Edit Profile",
       component: <EditProfile />,
     },

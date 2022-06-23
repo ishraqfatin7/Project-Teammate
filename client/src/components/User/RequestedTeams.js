@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth } from "../../context/authContext";
+import EachTeam from "./EachTeam";
+import RequestCard from "./RequestCard";
 
 export default function RequestedTeams() {
   const [teams, setTeams] = useState([]);
@@ -14,7 +16,7 @@ export default function RequestedTeams() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(cd),
     })
       .then((res) => res.json())
       .then((result) => {
@@ -30,7 +32,9 @@ export default function RequestedTeams() {
       <div className="text-center ">
         <h1 className="text-5xl font-bold text-orange-500">Requested Teams</h1>
 
-        <div className="text-lg text-base-300">Currently you have no Team</div>
+        {teams.map((components, index) => (
+          <RequestCard team={components.teamData} key={index}></RequestCard>
+        ))}
       </div>
     </div>
   );
