@@ -105,9 +105,9 @@ client.connect((err) => {
     const teamdata = req.body;
     console.log(teamdata);
     const filter = { teamdata };
-    const updateDoc = {
-      $set: teamdata,
-    };
+    // const updateDoc = {
+    //   $set: teamdata,
+    // };
     // const result = await teamsCollection.updateOne(filter, updateDoc, options);
     // res.json(result);
   });

@@ -38,6 +38,9 @@ const EachTeam = ({ team }) => {
           >
             Accept Request
           </button>
+          <button className="btn bg-orange-500 hover:btn-primary text-black">
+            Delete Request
+          </button>
         </div>
       </div>
     </div>

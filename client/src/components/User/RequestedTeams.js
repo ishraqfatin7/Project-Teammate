@@ -16,7 +16,7 @@ export default function RequestedTeams() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(cd),
     })
       .then((res) => res.json())
       .then((result) => {
