@@ -24,11 +24,12 @@ export function AuthProvider({ children }) {
   const auth = getAuth();
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const signUp = async (email, password) => {
+  const signUp = async (email, password, dpname) => {
     await createUserWithEmailAndPassword(auth, email, password);
     updateProfile(auth.currentUser, {
       photoURL:
         "https://i.ibb.co/GJZYgBD/user-icon-human-person-sign-vector-10206693.png",
+      displayName: dpname,
     });
   };
 

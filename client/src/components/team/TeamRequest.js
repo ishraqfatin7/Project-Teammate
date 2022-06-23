@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import Shell from "../Shell";
-import getUser from "../../lib/getUser";
 
 const TeamRequest = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   let navs = [
     { item: `${user ? "Dashboard" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
@@ -16,9 +15,8 @@ const TeamRequest = () => {
   const { id } = useParams();
   const [teamData, setTeamData] = useState({});
   const [userData, setUserData] = useState({});
+  console.log(user.email);
   useEffect(() => {
-    getUser(user.email, setUserData);
-    console.log(userData);
     const teamUrl = `http://localhost:5000/teams/${id}`;
     fetch(teamUrl, {
       method: "GET",
@@ -28,6 +26,7 @@ const TeamRequest = () => {
     })
       .then((res) => res.json())
       .then((result) => {
+        loadUser();
         setTeamData(result);
         console.log("From Server: ", result);
       })
@@ -35,6 +34,24 @@ const TeamRequest = () => {
         console.log(error);
       });
   }, [id]);
+
+  const loadUser = () => {
+    const userUrl = `http://localhost:5000/users/user/${user.email}`;
+    fetch(userUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setUserData(result);
+        console.log("From Server: ", result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Shell navs={navs}>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useAuth } from "../../context/authContext";
 import Sidebar from "../Navbar/Sidebar";
 import SidebarMobile from "../Navbar/SidebarMobile";
@@ -11,6 +12,7 @@ import RequestedTeams from "./RequestedTeams";
 export default function Dashboard() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState(0);
+  const [teams, setTeams] = useState([]);
   let navs = [
     { item: `${user ? "All Teams" : "Sign In"}` },
     { item: `${user ? "Profile" : "Sign Up"}` },
@@ -18,11 +20,31 @@ export default function Dashboard() {
     { item: "About Us" },
     { item: `${user ? "Log out" : ""}` },
   ];
+
+  useEffect(() => {
+    const url = `http://localhost:5000/teams/myTeams`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setTeams(result);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [user.email]);
+
   const SideNavContents = [
     {
       id: 0,
       name: "My teams",
-      component: <MyTeams />,
+      component: <MyTeams team={teams} />,
     },
     {
       id: 1,

@@ -50,7 +50,7 @@ export default function Signup() {
         isProfileEdited: false,
       };
       if (data.password === data.retypePass) {
-        signUp(data.email, data.password)
+        signUp(data.email, data.password, data.username)
           .then((userCredential) => {
             sendUserData(data);
             // Signed in

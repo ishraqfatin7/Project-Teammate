@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { json } = require("express");
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -115,6 +116,21 @@ client.connect((err) => {
     teamsCollection.find({ _id: id }).toArray((err, documents) => {
       res.send(documents[0]);
     });
+  });
+  app.post("/teams/myTeams", async (req, res) => {
+    const user = req.body;
+
+    const filter = {
+      teamCreator: user.email,
+    };
+    console.log(filter);
+    await teamsCollection
+      .find(filter)
+      .toArray()
+      .then((result) => {
+        console.log(result);
+        res.send(result);
+      });
   });
 
   // const filter = { email: "ishraqfatin71@gmail.com" };
