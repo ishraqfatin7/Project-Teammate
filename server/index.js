@@ -25,6 +25,8 @@ const client = new MongoClient(uri, {
 client.connect((err) => {
   const collection = client.db("TeammateDB").collection("users");
   const teamsCollection = client.db("TeammateDB").collection("teams");
+  const requestCollection = client.db("TeammateDB").collection("requests");
+
   console.log("Database Connected");
   app.get("/users", (req, res) => {
     collection.find().toArray((err, items) => {
@@ -71,6 +73,14 @@ client.connect((err) => {
       res.send(result.insertedCount > 0);
     });
   });
+  app.post("/addRequest", (req, res) => {
+    const requestData = req.body;
+    console.log("Adding New User ", requestData);
+    requestCollection.insertOne(requestData).then((result) => {
+      console.log("inserted count", result.insertedCount);
+      res.send(result.insertedCount > 0);
+    });
+  });
 
   app.put("/addUser", async (req, res) => {
     const user = req.body;
@@ -96,6 +106,12 @@ client.connect((err) => {
       res.send(items);
     });
   });
+  app.get("/requests", async (req, res) => {
+    await requestCollection.find().toArray((err, items) => {
+      //  console.log("from database ", items);
+      res.send(items);
+    });
+  });
   app.get("/users/:username", (req, res) => {
     //   const id = ObjectId(req.params.id);
     console.log(req.params.username);
@@ -104,7 +120,7 @@ client.connect((err) => {
       res.send(documents[0]);
     });
   });
-  app.get("/users/getuser/:email", async (req, res) => {
+  app.get("/users/user/:email", async (req, res) => {
     const query = { email: req.params.email };
     const result = await collection.findOne(query);
     res.send(result);
@@ -126,6 +142,21 @@ client.connect((err) => {
     };
     console.log(filter);
     await teamsCollection
+      .find(filter)
+      .toArray()
+      .then((result) => {
+        console.log(result);
+        res.send(result);
+      });
+  });
+  app.post("/requests/myRequests", async (req, res) => {
+    const user = req.body;
+
+    const filter = {
+      "userData.email": user.email,
+    };
+    console.log(filter);
+    await requestCollection
       .find(filter)
       .toArray()
       .then((result) => {
