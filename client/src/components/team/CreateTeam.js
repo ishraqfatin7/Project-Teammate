@@ -262,7 +262,7 @@ export default function CreateTeam() {
   // response view rendering
   if (response.status === 200 && view === "successCreate") {
     resultView = (
-      <div className="-mt-96">
+      <div className="mt-20">
         Team successfully created go to your{" "}
         <Link
           to="/dashboard"
