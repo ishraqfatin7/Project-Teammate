@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { json } = require("express");
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -95,22 +96,42 @@ client.connect((err) => {
       res.send(items);
     });
   });
-  app.get("/users/:id", (req, res) => {
+  app.get("/users/:id", async (req, res) => {
     //   const id = ObjectId(req.params.id);
-    console.log(req.params.id);
+    //  console.log(req.params.id);
     const id = req.params.id;
-    collection.find({ username: id }).toArray((err, documents) => {
+    await collection.find({ username: id }).toArray((err, documents) => {
       res.send(documents);
     });
   });
+  app.get("/users/user/:email", async (req, res) => {
+    const query = { email: req.params.email };
+    const result = await collection.findOne(query);
+    res.send(result);
+  });
   app.get("/teams/:id", (req, res) => {
     const id = ObjectId(req.params.id);
-    console.log(id);
+
     // console.log(req.params.id);
     //const id = req.params.id;
     teamsCollection.find({ _id: id }).toArray((err, documents) => {
       res.send(documents[0]);
     });
+  });
+  app.post("/teams/myTeams", async (req, res) => {
+    const user = req.body;
+
+    const filter = {
+      teamCreator: user.email,
+    };
+    console.log(filter);
+    await teamsCollection
+      .find(filter)
+      .toArray()
+      .then((result) => {
+        console.log(result);
+        res.send(result);
+      });
   });
 
   // const filter = { email: "ishraqfatin71@gmail.com" };
