@@ -52,6 +52,22 @@ const TeamRequest = () => {
         console.log(error);
       });
   };
+  const handleRequestClick = () => {
+    const requestData = { teamData, userData };
+    console.log(requestData);
+    const url = `http://localhost:5000/addRequest`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        console.log("From Server: ", response);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Shell navs={navs}>
@@ -61,7 +77,9 @@ const TeamRequest = () => {
             {teamData.teamName}
           </h1>
           <p>{teamData.teamDescription}</p>
-          <button className="btn btn-primary">Request</button>
+          <button className="btn btn-primary" onClick={handleRequestClick}>
+            Request
+          </button>
         </div>
       </div>
     </Shell>
