@@ -104,7 +104,7 @@ client.connect((err) => {
       res.send(documents[0]);
     });
   });
-  app.get("/users/getuser/:email", async (req, res) => {
+  app.get("/users/user/:email", async (req, res) => {
     const query = { email: req.params.email };
     const result = await collection.findOne(query);
     res.send(result);

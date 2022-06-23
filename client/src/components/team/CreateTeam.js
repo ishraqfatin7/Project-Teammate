@@ -39,7 +39,7 @@ export default function CreateTeam() {
     console.log(data);
     const teamData = {
       teamName: data.teamName,
-      teamCategory: data.category,
+      teamCategory: data.teamCategory,
       teamRegion: data.region,
       teamDescription: data.description,
       teamStatus: data.status,

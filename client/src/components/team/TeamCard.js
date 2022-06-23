@@ -21,14 +21,14 @@ export default function TeamCard({ comp }) {
               to="/#"
               className="underline underline-offset-2 text-orange-500 hover:text-white"
             >
-              User.name
+              {comp.teamCreator}
             </Link>
           </h3>
           <div className="badge badge-primary">
             Team Type: {comp.teamCategory}
           </div>
         </div>
-        <p className="text-slate-700">{comp.description}</p>
+        <p className="text-slate-700">{comp.teamDescription}</p>
         <div className="card-actions justify-end">
           <button
             onClick={() => handleBtnClick(comp._id)}
